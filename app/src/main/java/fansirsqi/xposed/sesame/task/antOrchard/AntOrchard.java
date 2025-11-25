@@ -119,7 +119,7 @@ public class AntOrchard extends ModelTask {
               triggerTbTask();
             }
             Integer orchardSpreadManureCountValue = orchardSpreadManureCount.getValue();
-            if (orchardSpreadManureCountValue > 0 && Status.canSpreadManureToday(userId)) orchardSpreadManure();
+            if (orchardSpreadManureCountValue > 0 orchardSpreadManure();
             if (orchardSpreadManureCountValue >= 3 && orchardSpreadManureCountValue < 10) {
               querySubplotsActivity(3);
             } else if (orchardSpreadManureCountValue >= 10) {
@@ -204,7 +204,9 @@ public class AntOrchard extends ModelTask {
           int happyPoint = Integer.parseInt(accountInfo.getString("happyPoint"));
           int wateringCost = accountInfo.getInt("wateringCost");
           int wateringLeftTimes = accountInfo.getInt("wateringLeftTimes");
-          if (happyPoint > wateringCost && wateringLeftTimes > 0 && (200 - wateringLeftTimes < orchardSpreadManureCount.getValue())) {
+          // 【新增】打印一下这三个数值，看看官方接口到底返回了什么
+          Log.record(TAG, "调试数据: 现有肥料=" + happyPoint + ", 单次消耗=" + wateringCost + ", 剩余次数=" + wateringLeftTimes);
+          if (happyPoint > wateringCost && wateringLeftTimes > 0 {
             jo = new JSONObject(AntOrchardRpcCall.orchardSpreadManure(getWua()));
             if (!"100".equals(jo.getString("resultCode"))) {
               Log.record(jo.getString("resultDesc"));
