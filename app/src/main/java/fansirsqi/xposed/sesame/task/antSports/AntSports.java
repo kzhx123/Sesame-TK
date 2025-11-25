@@ -446,7 +446,7 @@ public class AntSports extends ModelTask {
                                 break; // 失败时跳出循环
                             }
                             if (limitConfigNum > 1 && i1 < limitConfigNum - 1) {
-                                GlobalThreadPools.sleepCompat(10000);
+                                GlobalThreadPools.Thread.sleep(10000);
                             }
                         }
                         // 任务执行完成后，增加完成计数
@@ -874,7 +874,7 @@ public class AntSports extends ModelTask {
                             if (openTreasureBox(loader, boxNo, userId) > 0) {
                                 break;
                             }
-                            GlobalThreadPools.sleepCompat(200);
+                            GlobalThreadPools.Thread.sleep(200);
                         }
                     }, System.currentTimeMillis() + delay));
                 }
@@ -1307,7 +1307,7 @@ public class AntSports extends ModelTask {
                     }
                     
                     // 添加 1 秒的等待时间
-                    GlobalThreadPools.sleepCompat(1000);
+                    GlobalThreadPools.Thread.sleep(1000);
                 }
             } catch (Throwable t) {
                 Log.runtime(TAG, "processBubbleList err:");
@@ -1373,7 +1373,7 @@ public class AntSports extends ModelTask {
                         }
                     }
                     // 添加 1 秒的间隔
-                    GlobalThreadPools.sleepCompat(1000);
+                    GlobalThreadPools.Thread.sleep(1000);
                 }
             }
         } catch (Throwable t) {
@@ -1387,7 +1387,7 @@ public class AntSports extends ModelTask {
         try {
             // 发送 RPC 请求获取 club home 数据
             String clubHomeResponse = AntSportsRpcCall.queryClubHome();
-            GlobalThreadPools.sleepCompat(500);
+            GlobalThreadPools.Thread.sleep(500);
             JSONObject clubHomeJson = new JSONObject(clubHomeResponse);
             // 判断 clubAuth 字段是否为 "ENABLE"
             if (!clubHomeJson.optString("clubAuth").equals("ENABLE")) {
@@ -1409,7 +1409,7 @@ public class AntSports extends ModelTask {
                     String roomId = room.getString("roomId");
                     // 调用 queryMemberPriceRanking 方法并传递 coinBalance 的值
                     String memberPriceResult = AntSportsRpcCall.queryMemberPriceRanking(String.valueOf(coinBalance));
-                    GlobalThreadPools.sleepCompat(500);
+                    GlobalThreadPools.Thread.sleep(500);
                     JSONObject memberPriceJson = new JSONObject(memberPriceResult);
                     // 检查是否存在 rank 字段
                     if (memberPriceJson.has("rank") && memberPriceJson.getJSONObject("rank").has("data")) {
@@ -1426,7 +1426,7 @@ public class AntSports extends ModelTask {
                             if (isBattleForFriend) {
                                 // 在这里调用 queryClubMember 方法并传递 memberId 和 originBossId 的值
                                 String clubMemberResult = AntSportsRpcCall.queryClubMember(dataObj.getString("memberId"), originBossId);
-                                GlobalThreadPools.sleepCompat(500);
+                                GlobalThreadPools.Thread.sleep(500);
                                 // 解析 queryClubMember 返回的 JSON 数据
                                 JSONObject clubMemberJson = new JSONObject(clubMemberResult);
                                 if (clubMemberJson.has("member")) {
@@ -1437,7 +1437,7 @@ public class AntSports extends ModelTask {
                                     String priceInfo = memberObj.getString("priceInfo");
                                     // 调用 buyMember 方法
                                     String buyMemberResult = AntSportsRpcCall.buyMember(currentBossId, memberId, originBossId, priceInfo, roomId);
-                                    GlobalThreadPools.sleepCompat(500);
+                                    GlobalThreadPools.Thread.sleep(500);
                                     // 处理 buyMember 的返回结果
                                     JSONObject buyMemberResponse = new JSONObject(buyMemberResult);
                                     if (ResChecker.checkRes(TAG, buyMemberResponse)) {
